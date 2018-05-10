@@ -40,7 +40,7 @@ void cargarHardCode(EPersona personas[]);
 
 int baja(EPersona personas[],int limite);
 
-void clearScreen();
+void LimpiarPantalla();
 
 void ordenarAlfabeticamete(EPersona personas [],int limite);
 void ordenarNumericamente(EPersona personas [],int limite);
@@ -50,4 +50,5 @@ int idIncremental(EPersona personas[],int limite);
 void modificacion (EPersona personas[], int limite);
 
 int buscarPorId(EPersona persona[],int id,int limite);
+void listaDeBorrados(EPersona personas[],int limite);
 

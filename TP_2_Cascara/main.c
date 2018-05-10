@@ -36,9 +36,11 @@ int main()
         switch(opcion)
         {
             case 1:
+                LimpiarPantalla();
                 alta(personas,TAM);
                 break;
             case 2:
+                LimpiarPantalla();
                 baja(personas,TAM);
                 break;
             case 3:
@@ -51,7 +53,8 @@ int main()
                 seguir = 'n';
                 break;
             case 6:
-                modificacion(personas,TAM);
+                listaDeBorrados(personas,TAM);
+                //modificacion(personas,TAM);
                 break;
         }
     }
