@@ -1,0 +1,42 @@
+# depslib dependency file v1.0
+1525654504 source:c:\users\daira\desktop\tp_2_cascara\main.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<strings.h>
+	<conio.h>
+	<ctype.h>
+	"funciones.h"
+
+1525653068 c:\users\daira\desktop\tp_2_cascara\funciones.h
+
+1525654432 source:c:\users\daira\desktop\tp_2_cascara\funciones.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<strings.h>
+	<conio.h>
+	<ctype.h>
+	"funciones.h"
+
+1525931048 source:c:\users\daira\desktop\programandoparaelprimerparcial\tp_2_cascara\funciones.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<strings.h>
+	<string.h>
+	<conio.h>
+	<ctype.h>
+	"funciones.h"
+
+1525931004 c:\users\daira\desktop\programandoparaelprimerparcial\tp_2_cascara\funciones.h
+
+1525929741 source:c:\users\daira\desktop\programandoparaelprimerparcial\tp_2_cascara\main.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<strings.h>
+	<conio.h>
+	<ctype.h>
+	"funciones.h"
+
