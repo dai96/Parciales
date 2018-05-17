@@ -3,13 +3,14 @@
 
 typedef struct {
 
+    int idProp;
     char nombre[50];
-    int edad;
+    //char apellido [50];
+    char direccion [50];
+    char tarjeta[50];
     int estado;
-    int dni;
-    int id;
 
-}EPersona;
+}ePropietarios;
 
 /**typedef struct
 {
@@ -24,31 +25,32 @@ int estado;
 }eSerie;*/
 
 
-int obtenerEspacioLibre(EPersona personas[]);
+int obtenerEspacioLibre(ePropietarios propietarios[]);
 
 
-int buscarPorDni(EPersona personas[], int dni, int tamanio);
+int buscarPorDni(ePropietarios propietarios[], int dni, int tamanio);
 
-#endif // FUNCIONES_H_INCLUDED
+// FUNCIONES_H_INCLUDED
 
-int inicializar(EPersona personas[],int limite);
-int mostrarListado(EPersona personas[],int limite);
-int mostrarUno(EPersona personas);
+int inicializar(ePropietarios propietarios[],int limite);
+int mostrarListado(ePropietarios propietarios[],int limite);
+int mostrarUno(ePropietarios propietarios);
 
-int alta(EPersona personas[],int limite);
-void cargarHardCode(EPersona personas[]);
+int alta(ePropietarios propietarios[],int limite);
+void cargarHardCode(ePropietarios propietarios[]);
 
-int baja(EPersona personas[],int limite);
+int baja(ePropietarios propietarios[],int limite);
 
 void LimpiarPantalla();
 
-void ordenarAlfabeticamete(EPersona personas [],int limite);
-void ordenarNumericamente(EPersona personas [],int limite);
+void ordenarAlfabeticamete(ePropietarios propietarios [],int limite);
+void ordenarNumericamente(ePropietarios propietarios [],int limite);
 
-int idIncremental(EPersona personas[],int limite);
+int idIncremental(ePropietarios propietarios[],int limite);
 
-void modificacion (EPersona personas[], int limite);
+void modificacion (ePropietarios propietarios[], int limite);
 
-int buscarPorId(EPersona persona[],int id,int limite);
-void listaDeBorrados(EPersona personas[],int limite);
+int buscarPorId(ePropietarios persona[],int id,int limite);
+void listaDeBorrados(ePropietarios propietarios[],int limite);
 
+#endif

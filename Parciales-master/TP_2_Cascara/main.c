@@ -5,31 +5,32 @@
 #include <conio.h>
 #include <ctype.h>
 #include "funciones.h"
+#include "funcionesAutos.h"
 #define TAM 20
-#define TAME 10
+
 
 
 int main()
 {
-    EPersona personas [TAM];
+    ePropietarios propietarios [TAM];
 
     char seguir='s';
     int opcion=0;
 
+    inicializar(propietarios,TAM);
+    cargarHardCode(propietarios);
 
-
-
-    inicializar(personas,TAM);
-    cargarHardCode(personas);
-    //inicializarSeriesHardCode()
+    printf("Bienvenido!\n");
     while(seguir=='s')
     {
-        printf("1- Agregar persona\n");
-        printf("2- Borrar persona\n");
-        printf("3- Imprimir lista ordenada por  nombre\n");
-        printf("4- Imprimir grafico de edades\n\n");
-        printf("5- Salir\n");
-        printf("6-Modificar\n");
+        printf("--------------------*o*----------------------");
+        printf("\nElija una opcion para continuar:\n\n");
+        printf("1- Alta Propietario\n");
+        printf("2- Modificar tarjeta de credito\n");
+        printf("3- Baja Propietario\n");
+        printf("4- Mostrar lista propietarios\n\n");
+        printf("5- Salir\n\n-");
+        //printf("6-Modificar");
 
         scanf("%d",&opcion);
 
@@ -37,24 +38,26 @@ int main()
         {
             case 1:
                 LimpiarPantalla();
-                alta(personas,TAM);
+                alta(propietarios,TAM);
                 break;
             case 2:
                 LimpiarPantalla();
-                baja(personas,TAM);
+                modificacion(propietarios,TAM);
                 break;
             case 3:
-                ordenarAlfabeticamete(personas,TAM);
-                mostrarListado(personas,TAM);
+                LimpiarPantalla();
+                baja(propietarios,TAM);
                 break;
             case 4:
+                LimpiarPantalla();
+                mostrarListado(propietarios,TAM);
                 break;
             case 5:
                 seguir = 'n';
                 break;
             case 6:
-                listaDeBorrados(personas,TAM);
-                //modificacion(personas,TAM);
+                //listaDeBorrados(propietarios,TAM);
+                //modificacion(propietarios,TAM);
                 break;
         }
     }

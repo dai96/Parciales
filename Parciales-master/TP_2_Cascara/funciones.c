@@ -86,11 +86,13 @@ int esSoloLetras(char bector [])
     {
 
      if((bector[i] != ' ') && (bector[i] < 'a' || bector[i] > 'z' ) && (bector[i] < 'A' || bector[i] > 'Z' ) )
+
         return 0;
         i++;
 
 
     }
+
     return 1;//letra
 
 }
@@ -107,13 +109,15 @@ int getStringLetras(char mensaje[], char input [])
 {
     char aux [256];
     getString(mensaje, aux);
-    if (esSoloLetras(aux))
+    if (esSoloLetras(aux)==1)
     {
         strcpy(input,aux);
         return 1;
-
     }
-
+   /** else
+    {
+        printf("ERROR! Ingrese solo letras");
+    }*/
 }
 
 int getStringNumeros(char mensaje [], char input[])
@@ -126,24 +130,25 @@ int getStringNumeros(char mensaje [], char input[])
         return 1;
     }
 
+
 }
 
-int inicializar( EPersona personas[],int limite)
+int inicializar( ePropietarios propietarios[],int limite)
 {
     int retorno = -1;
     int i;
-    if(limite > 0 && personas != NULL)
+    if(limite > 0 && propietarios != NULL)
     {
         retorno = 0;
         for(i=0; i<limite; i++)
         {
-            personas[i].estado= 0;
+            propietarios[i].estado= 0;
         }
     }
     return retorno;
 }
 
-int mostrarListado(EPersona personas[],int limite)
+int mostrarListado(ePropietarios propietarios[],int limite)
 {
 
 
@@ -151,39 +156,39 @@ int mostrarListado(EPersona personas[],int limite)
 
     int retorno = -1;
     int i;
-    if(limite > 0 && personas != NULL)
+    if(limite > 0 && propietarios != NULL)
     {
         retorno = 0;
         for(i=0; i<limite; i++)
         {
-            if(personas[i].estado==1)
+            if(propietarios[i].estado==1)
             {
 
-                mostrarUno(personas[i]);
+                mostrarUno(propietarios[i]);
             }
         }
     }
     return retorno;
 }
 
-int mostrarUno(EPersona personas)
+int mostrarUno(ePropietarios propietarios)
 {
 
 
-     printf("\n %s - %d - %d - %d -%d\n\n\n",personas.nombre,personas.edad,personas.estado,personas.dni,personas.id);
+     printf("\n %d - %s - %s - %s \n\n\n",propietarios.idProp,propietarios.nombre,propietarios.direccion,propietarios.tarjeta);
 
 }
 
-int buscarLugarLibre(EPersona personas[],int limite)
+int buscarLugarLibre(ePropietarios propietarios[],int limite)
 {
     int retorno = -1;
     int i;
-    if(limite > 0 && personas != NULL)
+    if(limite > 0 && propietarios != NULL)
     {
         retorno = -2;
         for(i=0;i<limite;i++)
         {
-            if(personas[i].estado == 0)
+            if(propietarios[i].estado == 0)
             {
                 retorno = i;
                 break;
@@ -193,153 +198,149 @@ int buscarLugarLibre(EPersona personas[],int limite)
     return retorno;
 }
 
-int alta(EPersona personas[],int limite)
+int alta(ePropietarios propietarios[],int limite)
 {
     int retorno =-1;
     int i;
     char auxN[50];
+    //char auxA[50];
     char auxD[50];
-    char auxE[50];
-    int dni;
-    int edad;
+    char auxT[50];
     int respuesta;
 
-    i=buscarLugarLibre(personas,limite);
+    i=buscarLugarLibre(propietarios,limite);
     if(i>=0)
     {
-        printf("Ingrese el nombre: ");
-        fflush(stdin);
-        gets(auxN);
+
+        getString("Ingrese el nombre y apellido: ",auxN);
         while(esSoloLetras(auxN)==0)
         {
-            printf("ERROR! Ingrese un nombre: ");
-            fflush(stdin);
-            gets(auxN);
+           getString("ERROR! Ingrese solo letras: ",auxN);
         }
 
-        printf("Ingrese la edad: ");
-        fflush(stdin);
-        gets(auxE);
-        while(esNumero(auxE)==0)
+        //getString("Ingrese el apellido: ",auxA);
+        //while(esSoloLetras(auxA)==0)
+        //{
+          // getString("ERROR! Ingrese solo letras: ",auxA);
+        //}
+
+        getString("Ingrese la direccion: ",auxD);
+        while(esAlfaNumerico(auxD)==0)
         {
-            printf("ERROR! Ingrese una edad: ");
-            fflush(stdin);
-            gets(auxE);
+           getString("ERROR! Ingrese solo letras o numeros: ",auxD);
         }
 
-        edad=atoi(auxE);
-
-
-
-        printf("Ingrese el dni: ");
-        fflush(stdin);
-        gets(auxD);
-        while(esNumero(auxD)==0)
+        getString("Ingrese el numero de tarjeta: ",auxT);
+        while(esTelefono(auxT)==0)
         {
-            printf("ERROR! Ingrese un dni: ");
-            fflush(stdin);
-            gets(auxD);
+           getString("ERROR! Ingrese solo numeros: ",auxT);
         }
-        dni=atoi(auxD);
 
-        printf("\nIngrese s para dar de alta los siguientes datos:\n\n %s - %d - %d ", auxN, edad, dni);
+        printf("\nIngrese s para dar de alta los siguientes datos:\n\n %s - %s - %s \n\n", auxN, auxD, auxT);
         respuesta=getch();
 
         if (respuesta=='s')
         {
-        strcpy(personas[i].nombre, auxN);
-        personas[i].edad=edad;
-        personas[i].dni=dni;
-        personas[i].id=idIncremental(personas,limite);
-        personas[i].estado=1;
+            propietarios[i].idProp=idIncremental(propietarios,limite);
+            strcpy(propietarios[i].nombre, auxN);
+            //strcpy(propietarios[i].apellido, auxA);
+            strcpy(propietarios[i].direccion, auxD);
+            strcpy(propietarios[i].tarjeta, auxT);
+            propietarios[i].estado=1;
 
+            printf("\n\n\nAlta Exitosa!\n\n");
 
-        printf("\n\n\nAlta Exitosa!\n\n");
-        printf("\n\nIngrese s si desea ver el listado\n\n");
-        respuesta=getch();
-        if (respuesta=='s')
-        {
-            mostrarListado(personas, limite);
-
-        }
+            printf("\n\nIngrese s si desea ver el listado\n\n");
+            respuesta=getch();
+            if (respuesta=='s')
+            {
+                mostrarListado(propietarios, limite);
+            }
 
         }
         else
         {
             printf("\n\n\n Alta cancelada\n\n\n");
-
         }
-    }
+
     return 0;
+        }
 }
 
- void cargarHardCode(EPersona personas[])
+ void cargarHardCode(ePropietarios propietarios[])
 {
  int i;
-    /**datos
-
+    /**datos:
     apellidos: "Miñarro""Flo""Gomez""Perez""Moix""Potter""Gonzales""Zaccari"
-    numeros telefono 4454-1403 6380-4131 4453-0310 6390-2222 1111-3333 8888-2222 4444-6666
-    direcciones "Castellar 2241" "Pazos 323" "Ibarrola 674" "Ribadavia 6320" "Haiti 330" "Misiones 1456" "Corrientes 997"
-    legajo "123" "124" "125" "126" "127" """"""
-
+    numeros telefono: 4454-1403 6380-4131 4453-0310 6390-2222 1111-3333 8888-2222 4444-6666
+    direcciones: "Castellar 2241" "Pazos 323" "Ibarrola 674" "Ribadavia 6320" "Haiti 330" "Misiones 1456" "Corrientes 997"
+    legajo: "123" "124" "125" "126" "127" """"""
 
     */
-EPersona auxPersonas[15]= {{"Daira",22,1,39462131},{"Pedro",28,1,39462132},{"Belen",21,1,39462133},{"Julian",20,1,39462134},{"Natalia",30,1,39462135},{"Carlitos",37,1,39462136},{"Sofia",34,1,39462137},{"Lina",55,1,39462138},{"Javier",19,1,39462139},{"Luciana",6,1,39462140},{"Pablo",14,1,39462141},{"Maria",26,1,39462142},{"Ana",63,1,39462143},{"Mario",42,1,39462144},{"Francisca",60,1,39462145}};
-    for(i=0; i<15; i++)
-    {
-        personas[i]=auxPersonas[i];
-        personas[i].id=idIncremental(personas,20);
+    int id[]= {1,2,3,4};
+    char nombre[][50]= {"Juan","Luis","Maria","Jose"};
+    char tarjeta [] [50] = {"111-111","222-222","333-333","444-444"};
+    char direccion[][50]= {"Mitre","Urquiza","Belgrano","Alsina"};
 
+
+    for(int i=0; i<4; i++)
+    {
+        propietarios[i].idProp=id[i];
+        strcpy(propietarios[i].nombre,nombre[i]);
+        strcpy(propietarios[i].direccion,direccion[i]);
+        strcpy(propietarios[i].tarjeta,tarjeta[i]);
+        propietarios[i].estado=1;
     }
 
 }
 
-int baja(EPersona personas[],int limite)
+int baja(ePropietarios propietarios[],int limite)
 {
-    char auxDniBa [235];
+    char auxIdProp [50];
     int busqueda;
     char respuesta;
-    int auxDniBaja;
-    mostrarListado(personas,limite);
+    int auxIdPropBaja;
 
-    getStringNumeros("\nIngrese DNI a dar de baja: ",auxDniBa);
-    auxDniBaja=atoi(auxDniBa);
+    mostrarListado(propietarios,limite);
 
-    busqueda=buscarPorDni(personas,auxDniBaja,limite);
+    getStringNumeros("\nIngrese Id a dar de baja: ",auxIdProp);
+    auxIdPropBaja=atoi(auxIdProp);
+
+    busqueda=buscarPorId(propietarios,auxIdPropBaja,limite);
 
      if(busqueda==-1)
     {
-        printf("ERROR! Dni incorrecto.\n");
+        printf("\nERROR! Id incorrecto.\n");
 
     }
     else
-    {printf("Ingrese s para borrar el siguiente dato: \n\nDni:%d\nNombre:%s\nEdad:%d\n",personas[busqueda].dni,personas[busqueda].nombre,personas[busqueda].edad);
-    respuesta=getche();
-
-    if(respuesta=='s')
     {
-        printf("\n\nBaja exitosa!\n\n");
-        personas[busqueda].estado=3;
-        printf("\n\nIngrese s si desea ver el listado\n\n");
-        respuesta=getch();
-        if (respuesta=='s')
+        printf("\nIngrese s para borrar el siguiente dato: \n\n%s - %s - %s -%d\n\n",propietarios[busqueda].nombre,propietarios[busqueda].direccion,propietarios[busqueda].tarjeta, propietarios[busqueda].idProp);
+        respuesta=getche();
+        if(respuesta=='s')
         {
-            mostrarListado(personas,limite);
-        }
+            printf("\n\nBaja exitosa!\n\n");
+            propietarios[busqueda].estado=3;
 
-    }
-    else
-    {
-        printf("\n\nBaja cancelada.\n\n");
-    }
+            printf("\n\nIngrese s si desea ver el listado\n\n");
+            respuesta=getch();
+            if (respuesta=='s')
+            {
+                mostrarListado(propietarios,limite);
+            }
+
+        }
+        else
+        {
+            printf("\n\nBaja cancelada.\n\n");
+        }
     }
 
 
     return 0;
 }
 
-int buscarPorDni(EPersona persona[],int dni,int limite)
+/**int buscarPorDni(ePropietarios persona[],int dni,int limite)
 {
 
     for(int i=0; i<limite; i++)
@@ -350,14 +351,14 @@ int buscarPorDni(EPersona persona[],int dni,int limite)
         }
     }
     return -1;
-}
+}*/
 
-int buscarPorId(EPersona persona[],int id,int limite)
+int buscarPorId(ePropietarios propietarios[],int id,int limite)
 {
 
     for(int i=0; i<limite; i++)
     {
-        if(persona[i].estado==1 && persona[i].id==id)
+        if(propietarios[i].estado==1 && propietarios[i].idProp==id)
         {
             return i;
         }
@@ -365,9 +366,9 @@ int buscarPorId(EPersona persona[],int id,int limite)
     return -1;
 }
 
-void ordenarAlfabeticamete(EPersona personas [],int limite)
+/**void ordenarAlfabeticamete(ePropietarios propietarios [],int limite)
 {
-    EPersona auxiliar;
+    ePropietarios auxiliar;
     int i;
     int j;
     for(i=0; i<limite-1; i++)
@@ -375,23 +376,23 @@ void ordenarAlfabeticamete(EPersona personas [],int limite)
         for(j=i+1; j<limite; j++)
         {
 
-            //if(personas[i].idUsuario>personas[j].idUsuario)//asi para ordenar numeros
-            if(strcmp(personas[i].nombre,personas[j].nombre)>0)//asi para orenar letras
+            //if(propietarios[i].idUsuario>propietarios[j].idUsuario)//asi para ordenar numeros
+            if(strcmp(propietarios[i].nombre,propietarios[j].nombre)>0)//asi para orenar letras
             {
 
-                auxiliar=personas[i];
-                personas[i]=personas[j];
-                personas[j]=auxiliar;
+                auxiliar=propietarios[i];
+                propietarios[i]=propietarios[j];
+                propietarios[j]=auxiliar;
             }
 
         }
     }
 
-}
+}*/
 
-void ordenarNumericamente(EPersona personas [],int limite)
+/**void ordenarNumericamente(ePropietarios propietarios [],int limite)
 {
-    EPersona auxiliar;
+    ePropietarios auxiliar;
     int i;
     int j;
     for(i=0; i<limite-1; i++)
@@ -399,20 +400,20 @@ void ordenarNumericamente(EPersona personas [],int limite)
         for(j=i+1; j<limite; j++)
         {
 
-            if(personas[i].edad>personas[j].edad)//asi para ordenar numeros. para ordenamiento desenderte cambia <>
-            //if(strcmp(personas[i].nombre,personas[j].nombre)>0)//asi para orenar letras
+            if(propietarios[i].edad>propietarios[j].edad)//asi para ordenar numeros. para ordenamiento desenderte cambia <>
+            //if(strcmp(propietarios[i].nombre,propietarios[j].nombre)>0)//asi para orenar letras
             {
 
-                auxiliar=personas[i];
-                personas[i]=personas[j];
-                personas[j]=auxiliar;
+                auxiliar=propietarios[i];
+                propietarios[i]=propietarios[j];
+                propietarios[j]=auxiliar;
             }
 
         }
     }
 
 
-}
+}*/
 
 void LimpiarPantalla(void)
 {
@@ -420,19 +421,19 @@ void LimpiarPantalla(void)
 }
 
 
-int idIncremental(EPersona personas[],int limite)
+int idIncremental(ePropietarios propietarios[],int limite)
 {
     int retorno = 0;
     int i;
-    if(limite > 0 && personas != NULL)
+    if(limite > 0 && propietarios != NULL)
     {
         for(i=0; i<limite; i++)
         {
-            if(personas[i].estado == 1)///si el anterior esta ocupado
+            if(propietarios[i].estado == 1)///si el anterior esta ocupado
             {
-                    if(personas[i].id>retorno)///y esa id sea mayor al retorno
+                    if(propietarios[i].idProp>retorno)///y esa id sea mayor al retorno
                     {
-                         retorno=personas[i].id;///devuelve esa id
+                         retorno=propietarios[i].idProp;///devuelve esa id
                     }
 
             }
@@ -443,91 +444,76 @@ int idIncremental(EPersona personas[],int limite)
 }
 
 
-
-
-void modificacion (EPersona personas[], int limite)
+void modificacion (ePropietarios propietarios[], int limite)
 {
-    char auxId[50];
-    int auxiliarId;
+    char auxIdProp[50];
+    int auxiliarIdProp;
     int busqueda;
-    char auxN[50];
-    char auxD[50];
-    char auxE[50];
-    int dni;
-    int edad;
+    char auxT[50];
+    char respuesta;
 
-    mostrarListado(personas,limite);
+    mostrarListado(propietarios,limite);
 
-    getStringNumeros("\nIngrese id a modificar: ",auxId);
-    auxiliarId=atoi(auxId);
+    getString("\nIngrese id a modificar: ",auxIdProp);
+    while(esNumero(auxIdProp)==0)
+    {
+        getString("\nERROR! los IDs son numericos, intenta nuevamente: ",auxIdProp);
+    }
 
-    busqueda=buscarPorId(personas,auxiliarId,limite);
+    auxiliarIdProp=atoi(auxIdProp);
+    busqueda=buscarPorId(propietarios,auxiliarIdProp,limite);
 
      if(busqueda==-1)
     {
-        printf("ERROR! ID incorrecto\n");
-
+        printf("\nERROR! ID incorrecto\n");
     }
     else
     {
-        printf("Ingrese el nombre: ");
-        fflush(stdin);
-        gets(auxN);
-        while(esSoloLetras(auxN)==0)
+        getString("\nIngrese el nuevo numero de tarjeta: ",auxT);
+        while(esTelefono(auxT)==0)
         {
-            printf("ERROR! Ingrese un nombre: ");
-            fflush(stdin);
-            gets(auxN);
+            getString("\nERROR! solo numeros son permitidos en la tarjeta, intenta otra vez: ",auxT);
         }
 
-        printf("Ingrese la edad: ");
-        fflush(stdin);
-        gets(auxE);
-        while(esNumero(auxE)==0)
+        printf("\nPrecione s para confirmar modificacion en usuario : \n\n%s - %d\n\n ",propietarios[busqueda].nombre,propietarios[busqueda].idProp);
+        respuesta=getche();
+        if (respuesta=='s')
         {
-            printf("ERROR! Ingrese una edad: ");
-            fflush(stdin);
-            gets(auxE);
+            strcpy(propietarios[busqueda].tarjeta, auxT);
         }
-
-        edad=atoi(auxE);
-
-
-
-        printf("Ingrese el dni: ");
-        fflush(stdin);
-        gets(auxD);
-        while(esNumero(auxD)==0)
+        else
         {
-            printf("ERROR! Ingrese un dni: ");
-            fflush(stdin);
-            gets(auxD);
+            printf("\nModificacion cancelada");
         }
-        dni=atoi(auxD);
-
-
-
-        strcpy(personas[busqueda].nombre, auxN);
-        personas[busqueda].edad=edad;
-        personas[busqueda].dni=dni;
     }
-
 
 }
 
 
-void listaDeBorrados(EPersona personas[],int limite)
+void listaDeBorrados(ePropietarios propietarios[],int limite)
 {
     int i;
     for(i=0;i<limite;i++)
     {
-        if(personas[i].estado==3)
+        if(propietarios[i].estado==3)
         {
-            mostrarUno(personas[i]);
+            mostrarUno(propietarios[i]);
         }
     }
 }
 
+
+int devolverHorasEstadia()
+{
+    int horas;
+
+    srand(time(NULL));
+
+    horas = (rand()%24)+1;
+
+    return horas ;
+
+}
 
 
 /**float calcularPromedio(float nota1, float nota2)
@@ -573,11 +559,11 @@ void listaDeBorrados(EPersona personas[],int limite)
 
 
 
-//void mostrarUnoaMuchos(EPersona persona [])
+//void mostrarUnoaMuchos(ePropietarios persona [])
 
 
 
-/**void modificar(EPersona personas[],int limite)
+void modificar(ePropietarios propietarios[],int limite)
 {
     int opcion;
     int busqueda;
@@ -589,7 +575,7 @@ void listaDeBorrados(EPersona personas[],int limite)
     char auxiliar[50];
     int auxiliarbusqueda;
 
-    mostrarListado(personas, limite);
+    mostrarListado(propietarios, limite);
 
     printf("\n\nIngrese el id que desea modifcar:\n");
     fflush(stdin);
@@ -601,7 +587,7 @@ void listaDeBorrados(EPersona personas[],int limite)
         gets(auxiliar);
     }
     auxiliarbusqueda= atoi(auxiliar);
-    busqueda=buscarPorId(personas,auxiliarbusqueda,limite);
+    busqueda=buscarPorId(propietarios,auxiliarbusqueda,limite);
 
     if(busqueda==-1)
     {
@@ -626,7 +612,7 @@ void listaDeBorrados(EPersona personas[],int limite)
                         fflush(stdin);
                         gets(auxN);
                     }
-                    strcpy(personas[busqueda].nombre,auxiliar);
+                    strcpy(propietarios[busqueda].nombre,auxiliar);
                     printf("se a cambiado correctamente el nombre \n");
 
 
