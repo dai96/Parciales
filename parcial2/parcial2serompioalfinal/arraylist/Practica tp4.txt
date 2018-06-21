@@ -1,0 +1,26 @@
+Podemos ver el formate de codeblocks pero no en codigo:
+
+Primero -> leer desde un archivo csv vamos a data y vamos a tener que generar punteros de tipo empleado pa guardar en la
+lista, Todas esas acciones van a estar en Array List.
+
+Array List.h va a tener el doxy y la estructura , tenemos que leer la documentacion
+*******Es generico********
+Una ventaja que tiene es que al ordenar ordena sin mover todo.
+
+void **pElements-> es void porque se puede usar para distintos tipos de datos
+
+1º Crear LISTA EN MEMORIA y va a ser de tipo ARRAY LIST , eso tiene que apuntar al MONTON, entonces hacemos un MALLOC.
+2ºGenerar espacio en memoria para poder guardar datos para un empleado,creo un puntero a la ESTRUCTURA DE EMPLEADO
+3ºHacemos un malloc para la estructura de EMPLEADO.
+4ºCargo valores->HARDCODEAMOS 
+/****a Este punto esta disociado el Employee del ArrayList*****/
+5ºTengo que agregar ese elemento al array list
+6ºmE FIJO SI SE MODIFICO EL VALOR DEL "SIZE"
+7ºhacemos un get
+8ºmostramos los datos que cargamos
+9ºordenar , recibe como parametro una funcion y la va a ejecutar en algun momento,ordena direcciones de memoria,lo unico que hace es el swap pero no sabe que esta or
+denado , y le tenemos que decir que va a ordenar(criterio de ordenamiento) le vamos a dar en el *pFunc.
+
+Funcion compare recibe dos punteros a void para que sea eficiente al puntero del sort que recibe y lo hago generico
+El al_sort levanta dos elementos y se los pasa a la funcion que va a comparar , GUARDA LA DIRECCION DE MEMORIA DE LA FUNCION Y CUANDO QUIERE LA EJECUTA
+agarra dos estrcutruas con datos que saca del ARRAY DE LISTA ,y devuelve si son iguales o no para poder verlos.
