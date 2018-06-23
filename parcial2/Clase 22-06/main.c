@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-    eTramite* t;
+
     t=new_tramite();
 
     setId(t,5);
@@ -13,22 +13,23 @@
 
 int main()
 {
-   int opcion;
+    int opcion;
+    int i;
+    int largo;
+    char dni[20];
 
-   int largo;
+    int ultimoIdTramiteUrgente=0;
+    int ultimoIdTramiteRegular=0;
 
-   int ultimoIdtramiteUrgente=0;
-   int ultimoIdtramiteRegular=0;
-   int i;
-
-   arraylist* listatramitesUrgente;
-   arraylist* listatramitesRegulares;
+    arraylist* listaTramitesUrgentes;
+    arraylist* listaTramitesRegulares;
 
     arraylist* atendidosUrg;
     arraylist* atendidosReg;
 
-   eTramite* tramiteActual;
-   char dni[20];
+    eTramite* t;
+    eTramite* tramiteActual;
+
 
    listatramitesUrgente=al_newArrayList();
    listatramitesRegulares=al_newArrayList();
