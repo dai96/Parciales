@@ -101,14 +101,30 @@ int al_add(ArrayList* this, void* pElement)
 int al_deleteArrayList(ArrayList* this)
 {
     int returnAux = -1;
-    if(this!=NULL)
+    int flag 1;
+    if(this!=NULL && flag==1)
     {
         free(this);
-        this=NULL;
+        flag=0;
         returnAux = 0;
     }
+    if (flag==0)
+    {
+        this=NULL;
+    }
+
     return returnAux;
 }
+
+ /**int returnAux=-1;
+    if(this!=NULL)
+    {
+        free(this->pElements);
+        free(this);
+        returnAux=0;
+    }
+
+    return returnAux;*/
 
 /** \brief  Delete arrayList
  * \param pList ArrayList* Pointer to arrayList
@@ -461,7 +477,7 @@ int al_sort(ArrayList* this, int (*pFunc)(void* ,void*), int order)
     void* pElement2=NULL;
     int i;
     int j;
-    if(this!=NULL && (order==0||order==1))
+    if(this!=NULL && pFunc!=NULL && (order==0||order==1))
     {
         returnAux=0;
         for(i=0; i<this->len(this)-1; i++)
